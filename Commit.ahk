@@ -88,11 +88,17 @@
 	if(info=200){
 		top:=dxml.Find("//branch/@name",Branch)
 		for a,b in Uploads{
+			/*
+				add a filepath attribute to all of the stored info so that it has parity with the files.
+			*/
 			if(b.node)
 				b.node.SetAttribute("time",b.time),b.node.SetAttribute("sha",Upload[a])
 		}if(IsObject(OOF))
 			OOF.Seek(0),OOF.Write(PublishText),OOF.Length(OOF.Position),OOF.Close()
-		DeleteExtraFiles(DeleteList)
+		for a,b in DeleteList{
+			DeleteExtraFiles(DeleteList)
+			Break
+		}
 		dxml.Save(1),x.TrayTip("GitHub Update Complete"),Update()
 	}Else
 		m("An Error Occured" ,commit)
